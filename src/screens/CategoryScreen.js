@@ -24,10 +24,10 @@ const CategoryScreen = ({ navigation }) => {
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
-      style={styles.item}
+      style={styles.button}
       onPress={() => navigation.navigate('ProductList', { category: item })}
     >
-      <Text style={styles.text}>{item}</Text>
+      <Text style={styles.buttonText}>{item}</Text>
     </TouchableOpacity>
   );
 
@@ -52,6 +52,19 @@ const styles = StyleSheet.create({
   title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
   item: { padding: 15, backgroundColor: '#eee', marginBottom: 10, borderRadius: 8 },
   text: { fontSize: 18, textTransform: 'capitalize' },
+  button: {
+    backgroundColor: '#d3d3d3',
+    padding: 15,
+    marginBottom: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#0077cc',
+    textTransform: 'capitalize',
+  }
 });
 
 export default CategoryScreen;

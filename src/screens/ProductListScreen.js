@@ -1,6 +1,8 @@
 // src/screens/ProductListScreen.js
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, Image, StyleSheet } from 'react-native';
+import { View, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import { Card, Text, Button, Image, Icon } from '@rneui/themed';
+import { TouchableOpacity } from 'react-native';
 
 const ProductListScreen = ({ route, navigation }) => {
   const { category } = route.params;
@@ -25,40 +27,91 @@ const ProductListScreen = ({ route, navigation }) => {
   }, [category]);
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity
-      style={styles.item}
-      onPress={() => navigation.navigate('ProductDetail', { product: item })}
-    >
-      <Image source={{ uri: item.image }} style={styles.image} />
-      <View style={styles.info}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.price}>${item.price.toFixed(2)}</Text>
-      </View>
+    <TouchableOpacity onPress={() => navigation.navigate('ProductDetail', { product: item })}>
+      <Card containerStyle={styles.card}>
+        <View style={styles.itemRow}>
+          <Image source={{ uri: item.image }} style={styles.image} />
+          <View style={styles.info}>
+            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.price}>
+              <Text style={{ fontWeight: 'bold' }}>Price:</Text> ${item.price.toFixed(2)}
+            </Text>
+          </View>
+        </View>
+      </Card>
     </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
       {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#0000ff" style={{ flex: 1 }} />
       ) : (
-        <FlatList
-          data={products}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
-        />
+        <>
+          <FlatList
+            data={products}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id.toString()}
+            contentContainerStyle={{ paddingBottom: 100 }}
+          />
+          <View style={styles.backButtonContainer}>
+            <Button
+              title="Back"
+              onPress={() => navigation.goBack()}
+              icon={<Icon name="arrow-back" color="white" />}
+              buttonStyle={styles.backButton}
+            />
+          </View>
+        </>
       )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff', padding: 10 },
-  item: { flexDirection: 'row', padding: 10, marginBottom: 10, backgroundColor: '#f9f9f9', borderRadius: 8 },
-  image: { width: 60, height: 60, resizeMode: 'contain' },
-  info: { marginLeft: 10, flex: 1 },
-  title: { fontSize: 16, fontWeight: 'bold' },
-  price: { marginTop: 5, color: '#888' },
+  container: { flex: 1, backgroundColor: '#fff' },
+  card: {
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    elevation: 3, // Android shadow
+    shadowColor: '#000', // iOS shadow
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+  },
+  itemRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  image: {
+    width: 80,
+    height: 80,
+    resizeMode: 'contain',
+    marginRight: 10,
+  },
+  info: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  price: {
+    fontSize: 16,
+    color: '#333',
+  },
+  backButtonContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+  },
+  backButton: {
+    backgroundColor: '#007bff',
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
 });
 
 export default ProductListScreen;
