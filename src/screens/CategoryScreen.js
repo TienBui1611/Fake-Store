@@ -1,6 +1,13 @@
 // src/screens/CategoryScreen.js
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
+
+const categoryTitles = {
+  "electronics": "Electronics",
+  "jewelery": "Jewelery", // small typo fix too ("Jewelry" is correct English spelling)
+  "men's clothing": "Men's Clothing",
+  "women's clothing": "Women's Clothing",
+};
 
 const CategoryScreen = ({ navigation }) => {
   const [categories, setCategories] = useState([]);
@@ -9,11 +16,11 @@ const CategoryScreen = ({ navigation }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch('https://fakestoreapi.com/products/categories');
-        const data = await res.json();
+        const response = await fetch('https://fakestoreapi.com/products/categories');
+        const data = await response.json();
         setCategories(data);
       } catch (error) {
-        console.error('Failed to fetch categories:', error);
+        console.error('Error fetching categories:', error);
       } finally {
         setLoading(false);
       }
@@ -22,49 +29,70 @@ const CategoryScreen = ({ navigation }) => {
     fetchCategories();
   }, []);
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      style={styles.button}
-      onPress={() => navigation.navigate('ProductList', { category: item })}
-    >
-      <Text style={styles.buttonText}>{item}</Text>
-    </TouchableOpacity>
-  );
+  const handleCategoryPress = (category) => {
+    navigation.navigate('ProductList', { category });
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Product Categories</Text>
+      <Text style={styles.headerButton}>Categories</Text>
+
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
-        <FlatList
-          data={categories}
-          renderItem={renderItem}
-          keyExtractor={(item) => item}
-        />
+        <ScrollView contentContainerStyle={styles.buttonContainer}>
+          {categories.map((category) => (
+            <TouchableOpacity
+              key={category}
+              style={styles.categoryButton}
+              onPress={() => handleCategoryPress(category)}
+            >
+              <Text style={styles.categoryText}>
+                {categoryTitles[category] || category}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#fff' },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
-  item: { padding: 15, backgroundColor: '#eee', marginBottom: 10, borderRadius: 8 },
-  text: { fontSize: 18, textTransform: 'capitalize' },
-  button: {
-    backgroundColor: '#d3d3d3',
+  container: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#f4f4f4',
+  },
+  headerButton: {
+    backgroundColor: '#3498db',
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
     padding: 15,
-    marginBottom: 15,
-    borderRadius: 10,
+    borderRadius: 8,
+    marginBottom: 20,
+  },
+  buttonContainer: {
     alignItems: 'center',
   },
-  buttonText: {
+  categoryButton: {
+    backgroundColor: '#d3d3d3',
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    marginVertical: 10,
+    width: '90%',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#000',
+  },
+  categoryText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#0077cc',
-    textTransform: 'capitalize',
-  }
+    color: '#2c5fbb',
+    textAlign: 'center',
+  },
 });
 
 export default CategoryScreen;

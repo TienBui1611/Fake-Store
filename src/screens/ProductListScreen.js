@@ -48,6 +48,8 @@ const ProductListScreen = ({ route, navigation }) => {
         <ActivityIndicator size="large" color="#0000ff" style={{ flex: 1 }} />
       ) : (
         <>
+        <Text style={styles.header}>{category.toUpperCase()}</Text>
+
           <FlatList
             data={products}
             renderItem={renderItem}
@@ -79,6 +81,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
+  },
+  header: {
+    backgroundColor: '#3498db',
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 20,
   },
   itemRow: {
     flexDirection: 'row',
