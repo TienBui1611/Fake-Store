@@ -1,10 +1,22 @@
-// src/screens/ProductDetailsScreen.js
+// src/screens/ProductDetailScreen.js
 import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet, Alert } from 'react-native';
 import { Text, Card, Button, Image, Icon } from '@rneui/themed';
+import { useDispatch } from 'react-redux';
+import { addItemToCart } from '../redux/cartSlice';
 
-const ProductDetailsScreen = ({ route, navigation }) => {
+const ProductDetailScreen = ({ route, navigation }) => {
   const { product } = route.params;
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addItemToCart(product));
+    Alert.alert(
+      'Added to Cart',
+      `${product.title} has been added to your cart.`,
+      [{ text: 'OK' }]
+    );
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -35,7 +47,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
         <Button
           title="Add to Cart"
           icon={<Icon name="add-shopping-cart" color="white" />}
-          onPress={() => {/* handle add to cart */}}
+          onPress={handleAddToCart}
           buttonStyle={styles.button}
           containerStyle={styles.buttonContainer}
         />
@@ -127,4 +139,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductDetailsScreen;
+export default ProductDetailScreen;
