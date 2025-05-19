@@ -1,17 +1,25 @@
-// src/screens/ShoppingCartScreen.js
-import React from 'react';
-import { View, FlatList, StyleSheet, Text } from 'react-native';
+// src/screens/ShoppingCartScreen.js (updated)
+import React, { useEffect } from 'react';
+import { View, FlatList, StyleSheet, Text, Alert } from 'react-native';
 import { Card, Button, Image, Icon, Divider } from '@rneui/themed';
 import { useSelector, useDispatch } from 'react-redux';
-import { 
-  increaseItemQuantity, 
+import {
+  increaseItemQuantity,
   decreaseItemQuantity,
-  removeItemFromCart 
+  checkout,
+  syncCart
 } from '../redux/cartSlice';
 
 const ShoppingCartScreen = () => {
-  const { items, totalQuantity, totalAmount } = useSelector(state => state.cart);
+  const { items, totalQuantity, totalAmount, loading } = useSelector(state => state.cart);
   const dispatch = useDispatch();
+
+  // Sync cart with server when items change
+  useEffect(() => {
+    if (items.length > 0) {
+      dispatch(syncCart(items));
+    }
+  }, [items, dispatch]);
 
   const handleIncreaseQuantity = (id) => {
     dispatch(increaseItemQuantity(id));
@@ -19,6 +27,31 @@ const ShoppingCartScreen = () => {
 
   const handleDecreaseQuantity = (id) => {
     dispatch(decreaseItemQuantity(id));
+  };
+
+  const handleCheckout = async () => {
+    Alert.alert(
+      'Confirm Checkout',
+      'Are you sure you want to place this order?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Checkout',
+          onPress: async () => {
+            const resultAction = await dispatch(checkout());
+            
+            if (checkout.fulfilled.match(resultAction)) {
+              Alert.alert('Success', 'Your order has been placed successfully');
+            } else if (resultAction.payload) {
+              Alert.alert('Checkout Failed', resultAction.payload);
+            }
+          },
+        },
+      ]
+    );
   };
 
   const renderCartItem = ({ item }) => (
@@ -32,7 +65,7 @@ const ShoppingCartScreen = () => {
         <View style={styles.itemInfo}>
           <Text style={styles.title} numberOfLines={2}>{item.title}</Text>
           <Text style={styles.price}>${item.price.toFixed(2)}</Text>
-          
+
           <View style={styles.quantityContainer}>
             <Button
               icon={<Icon name="remove" color="white" size={16} />}
@@ -85,6 +118,18 @@ const ShoppingCartScreen = () => {
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.listContainer}
       />
+      
+      {/* Checkout Button */}
+      <View style={styles.checkoutContainer}>
+        <Button
+          title="Check Out"
+          icon={<Icon name="shopping-bag" color="white" />}
+          buttonStyle={styles.checkoutButton}
+          loading={loading}
+          onPress={handleCheckout}
+          disabled={items.length === 0}
+        />
+      </View>
     </View>
   );
 };
@@ -128,7 +173,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   listContainer: {
-    paddingBottom: 20,
+    paddingBottom: 80, // Make room for checkout button
   },
   card: {
     borderRadius: 10,
@@ -179,6 +224,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#007bff',
     marginTop: 5,
+  },
+  checkoutContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+  },
+  checkoutButton: {
+    backgroundColor: '#28a745',
+    borderRadius: 30,
+    paddingVertical: 12,
   },
 });
 
