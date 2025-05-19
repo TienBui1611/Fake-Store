@@ -97,7 +97,7 @@ const OrdersScreen = () => {
           <View style={styles.orderInfo}>
             <Text style={styles.orderInfoText}>Order ID: {order.id}</Text>
             <Text style={styles.orderInfoText}>Items: {order.item_numbers}</Text>
-            <Text style={styles.orderInfoText}>Total: ${order.total_price.toFixed(2)}</Text>
+            <Text style={styles.orderInfoText}>Total: ${(order.total_price / 100).toFixed(2)}</Text>
           </View>
           <Icon 
             name={isExpanded ? "keyboard-arrow-up" : "keyboard-arrow-down"} 
@@ -185,7 +185,7 @@ const OrdersScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    padding: 25,
     backgroundColor: '#f5f5f5',
   },
   centerContainer: {

@@ -2,10 +2,10 @@
 // const BASE_URL = 'http://localhost:3000';
 
 // For Android emulator, use:
-// const BASE_URL = 'http://10.0.2.2:3000';
+const BASE_URL = 'http://10.0.2.2:3000';
 
 // For Expo Go, use:
-const BASE_URL = 'http://10.128.219.12:8081';
+// const BASE_URL = 'http://10.128.219.12:8081';
 
 // Store the JWT token in memory (use AsyncStorage for persistence later)
 let authToken = null;
