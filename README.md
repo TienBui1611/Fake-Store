@@ -78,5 +78,7 @@ Make sure the following are installed on your machine:
     Open a new terminal in VS Code and run:
 
     ```bash
-    cd .. && npm start android
+    npm start android
     ```
+
+    and then click on `a`
