@@ -62,7 +62,6 @@ Make sure the following are installed on your machine:
    ```
 
 8. **Install Node.js Dependencies**  
-   In VS Code terminal, install the required backend API server:
 
    ```bash
    npm install
