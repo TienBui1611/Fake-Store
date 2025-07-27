@@ -52,7 +52,7 @@ Make sure the following are installed on your machine:
 6. **Install the backend API server**  
 
    ```bash
-   git clone "https://github.com/LarryAtGU/fake-store-server"
+   git clone https://github.com/LarryAtGU/fake-store-server
    ```
 
 7. **Go directly to that server**  
