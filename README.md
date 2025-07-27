@@ -23,7 +23,7 @@ Make sure the following are installed on your machine:
    Run the following command in the VS Code terminal:
 
    ```bash
-   npm install
+   npm install --legacy-peer-deps
    ```
 
 3. **Install React Native CLI Globally**  
