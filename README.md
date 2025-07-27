@@ -49,22 +49,32 @@ Make sure the following are installed on your machine:
    - Select system image (Android API 33+)
    - Click `Finish` and start the emulator
 
-6. **Start the backend API server**  
-   In VS Code terminal, run:
+6. **Install the backend API server**  
+
+   ```bash
+   git clone "https://github.com/LarryAtGU/fake-store-server"
+   ```
+
+7. **Go directly to that server**  
 
    ```bash
    cd fake-store-server
    ```
 
+8. **Install Node.js Dependencies**  
+   In VS Code terminal, install the required backend API server:
+
    ```bash
    npm install
    ```
+
+9. **Start the backend API server**  
 
    ```bash
    npm start
    ```
 
-7. **Run the App on Android**  
+10. **Run the App on Android**  
     Open a new terminal in VS Code and run:
 
     ```bash
