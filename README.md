@@ -2,7 +2,7 @@
 
 <div align="center">
   <img src="src/assets/fake-store-logo.png" alt="FakeStore Logo" width="200"/>
-  <br>
+  <br></br>
   ![React Native](https://img.shields.io/badge/React%20Native-0.72-blue.svg)
   ![Redux](https://img.shields.io/badge/Redux-Toolkit-purple.svg)
   ![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow.svg)
