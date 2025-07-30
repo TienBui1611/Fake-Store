@@ -2,7 +2,6 @@
 
 <div align="center">
   <img src="src/assets/fake-store-logo.png" alt="FakeStore Logo" width="200"/>
-  
   <br></br>
 
   ![React Native](https://img.shields.io/badge/React%20Native-0.72-blue.svg)
