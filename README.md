@@ -2,9 +2,7 @@
 
 <div align="center">
   <img src="src/assets/fake-store-logo.png" alt="FakeStore Logo" width="200"/>
-  
-  **A modern React Native e-commerce application**
-  
+
   ![React Native](https://img.shields.io/badge/React%20Native-0.72-blue.svg)
   ![Redux](https://img.shields.io/badge/Redux-Toolkit-purple.svg)
   ![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow.svg)
@@ -142,7 +140,7 @@ Ensure you have the following installed:
 2. **Run on Android**
 
    ```bash
-   # OR press 'a' in the Metro terminal
+   # Press 'a' in the Metro terminal
    ```
 
 ## 🛠️ Built With
